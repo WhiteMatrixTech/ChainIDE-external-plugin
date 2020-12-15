@@ -1,0 +1,7 @@
+.idea
+node_modules
+dist
+/**/node_modules
+
+nohup.out
+.vim/coc-settings.json
