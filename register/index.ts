@@ -29,20 +29,20 @@ export default function pluginInit() {
         type: PluginType.view,
         viewType: PluginViewType.iframe,
         position: PluginPosition.left,
+        mode: PluginMode.REMOTE,
+        content: 'http://127.0.0.1:8081/plugin1.html',
         active: true,
         description: {
             icon: 'https://gw.alipayobjects.com/zos/rmsportal/KDpgvguMpGfqaHPjicRK.svg',
             title: 'plugin1',
             description: 'plugin1 des',
         },
+        peerDependencies: {
+            plugin2: 'plugin2.js'
+        },
         menuIcon: {
             title: 'plugin1',
             iconCode: 'WebAppBuilderFragment'
         },
-        mode: PluginMode.REMOTE,
-        content: 'http://127.0.0.1:8081/plugin1.html',
-        peerDependencies: {
-            plugin2: 'plugin2.js'
-        }
     }
 }

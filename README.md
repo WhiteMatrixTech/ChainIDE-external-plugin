@@ -52,6 +52,7 @@ export interface BasePluginOption {
   position: PluginPosition;
   mode: PluginMode;
   content: PluginContent;
+  active: boolean;
   description: {
     title: string;
     icon?: string;
