@@ -28,7 +28,7 @@ export default function pluginInit() {
         version: '0.0.1',
         type: PluginType.view,
         viewType: PluginViewType.iframe,
-        position: PluginPosition.left,
+        position: PluginPosition.center,
         mode: PluginMode.REMOTE,
         content: 'http://127.0.0.1:8080/example/simplePlugin.html',
         active: true,

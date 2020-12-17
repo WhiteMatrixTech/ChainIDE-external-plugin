@@ -2,7 +2,7 @@
 
 ##### 引入方式
 - <script> 标签引入
-- 或通过 import 方式引入
+- npm i @white-matrix/chainide-proxy-implements 通过 import 方式引入
 
 #### config.js
 
