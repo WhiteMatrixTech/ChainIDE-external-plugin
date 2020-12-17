@@ -28,13 +28,13 @@ export default function pluginInit() {
         version: '0.0.1',
         type: PluginType.view,
         viewType: PluginViewType.iframe,
-        position: PluginPosition.center,
+        position: PluginPosition.left,
         mode: PluginMode.REMOTE,
-        content: 'http://127.0.0.1:8081/plugin1.html',
+        content: 'http://127.0.0.1:8080/example/simplePlugin.html',
         active: true,
         description: {
-            title: 'plugin1',
-            description: 'plugin1 des',
+            title: 'plusimplePlugingin1',
+            description: 'simplePlugin des',
         },
         // menuIcon: {
         //     title: 'plugin1',
