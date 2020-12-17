@@ -24,10 +24,10 @@ const webpack = require('webpack');
 const TerserPlugin = require('terser-webpack-plugin');
 
 module.exports = {
-  mode: 'production',
-  entry: './register/index.ts',
+  entry: './src/index.ts',
   output: {
-    library: 'MyLibrary',
+    path: __dirname + '/lib',
+    library: 'simplePlugin',
     libraryTarget: 'amd',
     libraryExport: 'default',
   },

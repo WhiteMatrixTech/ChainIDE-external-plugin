@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>simplePlugin</title>
+    <script src="http://localhost:8080/chainIdeProxyImp/ChainIdeProxyImp.js"></script>
+  </head>
+  <body>
+    <script>
+    const newChainIdeProxyImp = new ChainIdeProxyImp({ pluginId: 'simplePlugin' });
+
+    // 注册插件方法
+    newChainIdeProxyImp.registerApiFunction('registerSimplePluginFunc', (data) => {
+        console.log('registerSimplePluginFunc', data);
+        return data;
+    });
+
+    // 调用插件注册方法
+    newChainIdeProxyImp
+        .callApiFunction('simplePlugin', 'registerSimplePluginFunc')
+        .then((data) => {
+          console.log('simplePlugin register function', data);
+        });
+
+    // 调用 chainIDE 提供的方法
+    newChainIdeProxyImp
+        .callApiFunction('root', 'getFileTree')
+        .then((data) => {
+          console.log('fileTree', data);
+        });
+
+    // 订阅事件
+    newChainIdeProxyImp.subscribeEvent('registerSimplePluginFunc.someChange', ({ data }) =>
+        console.log( data)
+    );
+
+    // 发布事件，可用于系统事件与插件内部事件相互通知
+    newChainIdeProxyImp.publishEvent('registerSimplePluginFunc.someChange', 'event');
+
+
+    newChainIdeProxyImp
+        .callApiFunction('root', 'getFileTree')
+        .then((data) => {
+          console.log('fileTree', data);
+        });
+    </script>
+
+    simplePlugin
+  </body>
+</html>

@@ -23,26 +23,23 @@ export enum PluginPosition {
 
 export default function pluginInit() {
     return {
-        pluginId: 'plugin1',
-        moduleName: 'MyLibrary',
+        pluginId: 'simplePlugin',
+        moduleName: 'simplePlugin',
         version: '0.0.1',
         type: PluginType.view,
         viewType: PluginViewType.iframe,
-        position: PluginPosition.left,
+        position: PluginPosition.center,
         mode: PluginMode.REMOTE,
         content: 'http://127.0.0.1:8081/plugin1.html',
         active: true,
         description: {
-            icon: 'https://gw.alipayobjects.com/zos/rmsportal/KDpgvguMpGfqaHPjicRK.svg',
             title: 'plugin1',
             description: 'plugin1 des',
         },
-        peerDependencies: {
-            plugin2: 'plugin2.js'
-        },
-        menuIcon: {
-            title: 'plugin1',
-            iconCode: 'WebAppBuilderFragment'
-        },
+        // menuIcon: {
+        //     title: 'plugin1',
+        //     use icon clode from https://developer.microsoft.com/en-us/fluentui#/controls/web/icon
+        //     iconCode: 'WebAppBuilderFragment'
+        // },
     }
 }

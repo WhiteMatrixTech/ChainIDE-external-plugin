@@ -1,14 +1,13 @@
-#### Import
+#### @white-matrix/chainide-proxy-implements
 
-- provide UMD package
-
-- support CDN and module
-
+##### 引入方式
+- <script> 标签引入
+- 或通过 import 方式引入
 
 #### config.js
 
 ```typescript
-import { chainIdeProxyImpl } from 'chainIdeProxyImpl';
+import chainIdeProxyImpl from '@white-matrix/chainide-proxy-implements';
 import { ReactNode } from 'react';
 import { IIconProps } from 'office-ui-fabric-react';
 
@@ -37,6 +36,7 @@ export enum PluginPosition {
 
 export interface PluginMenuIcon {
   title: string;
+  // you can use iconCode from https://developer.microsoft.com/en-us/fluentui#/controls/web/icon
   iconCode: string;
   iconProps: IIconProps;
 }
@@ -80,7 +80,6 @@ export interface CenterPluginIframeOption extends BaseIframePluginOption {
 
 export type PluginOption = LeftPluginIframeOption | CenterPluginIframeOption;
 
-// 动态
 const loadOptions = (pluginOption: PluginOption) => {
   const commandFunc = () => {
     // chainIdeProxyImpl.(eg: open webview name with data or send action); add View
