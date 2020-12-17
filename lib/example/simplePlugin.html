@@ -23,29 +23,36 @@
           console.log('simplePlugin register function', data);
         });
 
-    // 调用 chainIDE 提供的方法
+    // 调用 chainIDE 提供的方法 获取文件树
     newChainIdeProxyImp
         .callApiFunction('root', 'getFileTree')
         .then((data) => {
           console.log('fileTree', data);
+          data.data.children
         });
+
+    // 调用 chainIDE 提供的方法 获取文件内容
+    newChainIdeProxyImp
+        .callApiFunction('root', 'getFileContent', 'root/storage.sol')
+        .then((data) => {
+          console.log('content', data);
+        });
+
 
     // 订阅事件
     newChainIdeProxyImp.subscribeEvent('registerSimplePluginFunc.someChange', ({ data }) =>
         console.log( data)
     );
 
+    // 订阅 ChainIDE 系统事件文件变动
+    newChainIdeProxyImp.subscribeEvent('onFileContentChange', ({ data }) => console.log( data)
+    );
+
     // 发布事件，可用于系统事件与插件内部事件相互通知
     newChainIdeProxyImp.publishEvent('registerSimplePluginFunc.someChange', 'event');
-
-
-    newChainIdeProxyImp
-        .callApiFunction('root', 'getFileTree')
-        .then((data) => {
-          console.log('fileTree', data);
-        });
     </script>
 
     simplePlugin
+    <input />
   </body>
 </html>

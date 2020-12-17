@@ -33,13 +33,13 @@ export default function pluginInit() {
         content: 'http://127.0.0.1:8080/example/simplePlugin.html',
         active: true,
         description: {
-            title: 'plusimplePlugingin1',
+            title: 'simplePlugin',
             description: 'simplePlugin des',
         },
-        // menuIcon: {
-        //     title: 'plugin1',
-        //     use icon clode from https://developer.microsoft.com/en-us/fluentui#/controls/web/icon
-        //     iconCode: 'WebAppBuilderFragment'
-        // },
+        menuIcon: {
+            title: 'simplePlugin',
+            // use icon clode from https://developer.microsoft.com/en-us/fluentui#/controls/web/icon
+            iconCode: 'WebAppBuilderFragment'
+        },
     }
 }
