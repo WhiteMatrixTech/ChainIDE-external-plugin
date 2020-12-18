@@ -1,3 +1,8 @@
+#### 运行
+npm i && npm run start:html
+此时导出的 localhost:8080/main.js 为 plugin 导入文件
+webpack.config.js 中设置的 library 为 amd 包名
+将 localhost:8080/main.js 与 libraryName 填入插件 load 表单内，点击 load，即可成功加载插件
 #### @white-matrix/chainide-proxy-implements
 
 ##### 引入方式
