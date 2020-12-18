@@ -16,5 +16,6 @@ export default class ChainIdeProxyImp {
     publishEvent<T>(eventName: string, data: T): void;
     unsubscribeEvent(eventName: string): void;
     registerApiFunction(functionName: string, cb: (data?: any) => any): void;
+    fileSystemService<T>(apiName: string, ...rest: T[]): Promise<unknown>;
     callApiFunction<T>(targetPluginId: string, functionName: string, data: T): Promise<unknown>;
 }

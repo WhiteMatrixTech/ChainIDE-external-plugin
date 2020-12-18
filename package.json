@@ -3,9 +3,9 @@
   "description": "ChainIDE Simple Plugin",
   "name": "simple-plugin",
   "scripts": {
-    "start": "concurrently 'npm run build:dev' 'npm run server'",
     "build:dev": "webpack -w  --mode=development",
     "build": "webpack  --mode=production",
+    "start:html": "concurrently 'npm run build:dev' 'npm run server'",
     "server": "http-server ./lib"
   },
   "devDependencies": {
