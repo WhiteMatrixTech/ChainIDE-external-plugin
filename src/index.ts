@@ -1,3 +1,5 @@
+import EvmWallet from "./evmService/EvmWallet"
+
 export enum PluginMode {
     REMOTE = 'remote',
     DYNAMIC = 'dynamic'
@@ -30,7 +32,7 @@ export default function pluginInit() {
         viewType: PluginViewType.iframe,
         position: PluginPosition.center,
         mode: PluginMode.REMOTE,
-        content: 'http://127.0.0.1:8080/example/simplePlugin.html',
+        content: EvmWallet,
         active: true,
         description: {
             title: 'simplePlugin',
