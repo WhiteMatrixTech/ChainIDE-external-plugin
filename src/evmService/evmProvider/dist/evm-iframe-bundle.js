@@ -30912,7 +30912,7 @@ AsyncEventEmitter.prototype._beforeOrAfter = function(event, target, listener, b
   }
 
   index = listeners.length;
-  
+
   for(i = listeners.length; i--;) {
     if(listeners[i] === target) {
       index = i + add;
@@ -43267,7 +43267,7 @@ Ethash.prototype.verifyPOW = function (block, cb) {
         var memoized = _restParam(function memoized(args) {
             var callback = args.pop();
             var key = hasher.apply(null, args);
-            if (has.call(memo, key)) {   
+            if (has.call(memo, key)) {
                 async.setImmediate(function () {
                     callback.apply(null, memo[key]);
                 });
@@ -44154,7 +44154,7 @@ const MR = require('miller-rabin')
 const BN = ethUtil.BN
 
 exports.params = {
-  DATASET_BYTES_INIT: 1073741824, //2^30  
+  DATASET_BYTES_INIT: 1073741824, //2^30
   DATASET_BYTES_GROWTH: 8388608, //2 ^ 23
   CACHE_BYTES_INIT: 16777216,    // 2**24          # bytes in dataset at genesis
   CACHE_BYTES_GROWTH: 131072,    // 2**17  cache growth per epoch
@@ -44189,15 +44189,15 @@ exports.getFullSize = function(epoc){
 }
 
 exports.getEpoc = function(blockNumber){
-  return Math.floor(blockNumber / exports.params.EPOCH_LENGTH) 
+  return Math.floor(blockNumber / exports.params.EPOCH_LENGTH)
 }
 
 /**
- * Generates a seed give the end epoc and optional the begining epoc and the 
+ * Generates a seed give the end epoc and optional the begining epoc and the
  * begining epoc seed
  * @method getSeed
  * @param end Number
- * @param begin Number 
+ * @param begin Number
  * @param seed Buffer
  */
 exports.getSeed = function(seed, begin, end){
@@ -44214,7 +44214,7 @@ var fnv = exports.fnv = function(x, y){
 exports.fnvBuffer = function(a, b){
   var r = new Buffer(a.length)
   for(var i = 0; i < a.length ; i = i + 4){
-      r.writeUInt32LE(fnv(a.readUInt32LE(i), b.readUInt32LE(i)), i) 
+      r.writeUInt32LE(fnv(a.readUInt32LE(i), b.readUInt32LE(i)), i)
   }
   return r
 }
@@ -62315,7 +62315,7 @@ function fixDoubleBlack(stack) {
         } else {
           //console.log("case 2: black sibling, black parent", p.right.value)
           p.right = repaint(RED, s)
-          continue  
+          continue
         }
       } else {
         //console.log("case 3: red sibling")
@@ -62404,7 +62404,7 @@ function fixDoubleBlack(stack) {
         } else {
           //console.log("case 2: black sibling, black parent")
           p.left = repaint(RED, s)
-          continue  
+          continue
         }
       } else {
         //console.log("case 3: red sibling")
@@ -63229,7 +63229,7 @@ module.exports = Array.isArray || function (arr) {
     var length = message.length;
     if (notString) {
       if (typeof length !== 'number' ||
-        !Array.isArray(message) && 
+        !Array.isArray(message) &&
         !(ARRAY_BUFFER && ArrayBuffer.isView(message))) {
         throw 'input is invalid type';
       }
@@ -63315,7 +63315,7 @@ module.exports = Array.isArray || function (arr) {
     var length = str.length;
     if (notString) {
       if (typeof length !== 'number' ||
-        !Array.isArray(str) && 
+        !Array.isArray(str) &&
         !(ARRAY_BUFFER && ArrayBuffer.isView(str))) {
         throw 'input is invalid type';
       }
@@ -64226,7 +64226,7 @@ Codec.prototype.createStreamDecoder = function(opts){
   } else if (opts.keys) {
     return function(key) {
       return self.decodeKey(key, opts);
-    }; 
+    };
   } else if (opts.values) {
     return function(_, value){
       return self.decodeValue(value, opts);
@@ -64273,7 +64273,7 @@ exports.binary = {
   encode: function(data){
     return isBinary(data)
       ? data
-      : new Buffer(data);      
+      : new Buffer(data);
   },
   decode: identity,
   buffer: true,
@@ -66539,7 +66539,7 @@ WriteStream.prototype._flush = function (f) {
     , buffer = self._buffer
 
   if (self._destroyed || !buffer) return
- 
+
   if (!self._db.isOpen()) {
     return self._db.on('ready', function () { self._flush(f) })
   }

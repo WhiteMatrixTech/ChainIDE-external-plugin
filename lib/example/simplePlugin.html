@@ -16,66 +16,60 @@
 
 <body>
   <script>
-    require(['../chainIdeProxyImp/EvmWallet.js'], function (EvmWallet, _, Backbone) {
-      console.log('EvmWallet', EvmWallet.default);
-      EvmWallet.default.getInstance()
+    const newChainIdeProxyImp = new ChainIdeProxyImp({ pluginId: 'simplePlugin' });
 
+    // 注册插件方法(跨插件调用)
+    newChainIdeProxyImp.registerApiFunction('registerSimplePluginFunc', ({ data }) => {
+      console.log('registerSimplePluginFunc', data);
+      return data;
     });
 
-    // const newChainIdeProxyImp = new ChainIdeProxyImp({ pluginId: 'simplePlugin' });
+    // 调用插件注册方法
+    newChainIdeProxyImp
+      .callApiFunction('simplePlugin', 'registerSimplePluginFunc', 'registerSimplePluginFunc res')
+      .then(({ data }) => {
+        console.log('simplePlugin register function', data);
+      });
 
-    // // 注册插件方法(跨插件调用)
-    // newChainIdeProxyImp.registerApiFunction('registerSimplePluginFunc', ({ data }) => {
-    //   console.log('registerSimplePluginFunc', data);
-    //   return data;
-    // });
+    // 插件内部订阅事件(跨插件通知)
+    newChainIdeProxyImp.subscribeEvent('registerSimplePluginFunc.someChange', ({ data }) =>
+      console.log(data)
+    );
 
-    // // 调用插件注册方法
-    // newChainIdeProxyImp
-    //   .callApiFunction('simplePlugin', 'registerSimplePluginFunc', 'registerSimplePluginFunc res')
-    //   .then(({ data }) => {
-    //     console.log('simplePlugin register function', data);
-    //   });
+    // 发布事件，可用于系统事件与插件内部事件相互通知
+    newChainIdeProxyImp.publishEvent('registerSimplePluginFunc.someChange', 'event');
 
-    // // 插件内部订阅事件(跨插件通知)
-    // newChainIdeProxyImp.subscribeEvent('registerSimplePluginFunc.someChange', ({ data }) =>
-    //   console.log(data)
-    // );
+    // 调用 chainIDE fileSystem 提供的方法 获取文件树
+    newChainIdeProxyImp
+      .fileSystemService('getFileTree')
+      .then(({ data }) => {
+        document.getElementById('fileTree').innerHTML = JSON.stringify(data);
+      });
 
-    // // 发布事件，可用于系统事件与插件内部事件相互通知
-    // newChainIdeProxyImp.publishEvent('registerSimplePluginFunc.someChange', 'event');
+    // 调用 chainIDE fileSystem 获取文件内容
+    newChainIdeProxyImp
+      .fileSystemService('getFileContent', 'root/storage.sol')
+      .then(({ data }) => {
+        document.getElementById('getFileContent').innerHTML = data;
+      });
 
-    // // 调用 chainIDE fileSystem 提供的方法 获取文件树
-    // newChainIdeProxyImp
-    //   .fileSystemService('getFileTree')
-    //   .then(({ data }) => {
-    //     document.getElementById('fileTree').innerHTML = JSON.stringify(data);
-    //   });
+    // 调用 chainIDE fileSystem 获取文件 path list 第二个参数为正则
+    newChainIdeProxyImp
+      .fileSystemService('getAllPathByRegex', '.*')
+      .then(({ data }) => {
+        console.log('getAllPathByRegex', data);
+      });
 
-    // // 调用 chainIDE fileSystem 获取文件内容
-    // newChainIdeProxyImp
-    //   .fileSystemService('getFileContent', 'root/storage.sol')
-    //   .then(({ data }) => {
-    //     document.getElementById('getFileContent').innerHTML = data;
-    //   });
-
-    // // 调用 chainIDE fileSystem 获取文件 path list 第二个参数为正则
-    // newChainIdeProxyImp
-    //   .fileSystemService('getAllPathByRegex', '.*')
-    //   .then(({ data }) => {
-    //     console.log('getAllPathByRegex', data);
-    //   });
-
-    // // 订阅 ChainIDE 系统事件文件变动
-    // newChainIdeProxyImp.subscribeEvent('onFileContentChange', ({ data }) => {
-    //   if (data.path === 'root/storage.sol') {
-    //     newChainIdeProxyImp
-    //       .fileSystemService('getFileContent', 'root/storage.sol')
-    //       .then((res) => {
-    //         document.getElementById('getFileContent').innerHTML = res.data;
-    //       });
-    //   }
-    // });
+    // 订阅 ChainIDE 系统事件文件变动
+    newChainIdeProxyImp.subscribeEvent('onFileContentChange', ({ data }) => {
+      if (data.path === 'root/storage.sol') {
+        newChainIdeProxyImp
+          .fileSystemService('getFileContent', 'root/storage.sol')
+          .then((res) => {
+            document.getElementById('getFileContent').innerHTML = res.data;
+          });
+      }
+    });
   </script>
 
   <h1>simplePlugin</h1>

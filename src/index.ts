@@ -1,4 +1,4 @@
-import EvmWallet from "./evmService/EvmWallet"
+import MetamaskWallet from "./metamaskService/MetamaskWallet"
 
 export enum PluginMode {
     REMOTE = 'remote',
@@ -28,11 +28,11 @@ export default function pluginInit() {
         pluginId: 'simplePlugin',
         moduleName: 'simplePlugin',
         version: '0.0.1',
-        type: PluginType.view,
-        viewType: PluginViewType.iframe,
-        position: PluginPosition.center,
+        type: PluginType.server,
+        viewType: PluginViewType.none,
+        position: PluginPosition.none,
         mode: PluginMode.REMOTE,
-        content: EvmWallet,
+        content: MetamaskWallet,
         active: true,
         description: {
             title: 'simplePlugin',
@@ -43,5 +43,8 @@ export default function pluginInit() {
             // use icon clode from https://developer.microsoft.com/en-us/fluentui#/controls/web/icon
             iconCode: 'WebAppBuilderFragment'
         },
+        extra: {
+            isWallet: true
+        }
     }
 }

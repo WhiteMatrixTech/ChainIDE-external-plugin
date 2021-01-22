@@ -54,7 +54,7 @@ export default class EvmWallet implements BasicWallet {
    * [init 钱包初始化]
    * @method init
    * @params {onChainChange: listen并获取网络, onAccountChange: listen并获取账户 }
-   * @return {[Promise]} 
+   * @return {[Promise]}
    */
   init(onChainChange: Function, onAccountChange: Function) {
     return new Promise<any>((resolve, reject) => {
