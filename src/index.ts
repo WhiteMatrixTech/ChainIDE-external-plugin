@@ -1,3 +1,4 @@
+import EvmWallet from "./evmService/EvmWallet"
 import MetamaskWallet from "./metamaskService/MetamaskWallet"
 
 export enum PluginMode {
@@ -25,14 +26,14 @@ export enum PluginPosition {
 
 export default function pluginInit() {
     return {
-        pluginId: 'metamaskWalletPlugin',
+        pluginId: 'evmWalletPlugin',
         moduleName: 'simplePlugin',
         version: '0.0.1',
         type: PluginType.server,
         viewType: PluginViewType.none,
         position: PluginPosition.none,
         mode: PluginMode.REMOTE,
-        content: MetamaskWallet,
+        content: EvmWallet,
         active: true,
         description: {
             title: 'simplePlugin',

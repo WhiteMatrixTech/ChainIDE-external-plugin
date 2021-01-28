@@ -1909,7 +1909,7 @@ function getLogs(filterOptions) {
     return logObjects;
 }
 
-var devkitVm = (module.exports = {
+module.exports = {
     // base
     init: init,
 
@@ -1953,8 +1953,4 @@ var devkitVm = (module.exports = {
 
     // provider
     Provider: DevkitProvider,
-});
-
-if (typeof window !== 'undefined') {
-    window.devkitVm = devkitVm;
 }

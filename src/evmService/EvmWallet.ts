@@ -5,8 +5,8 @@ import { Observable, Observer } from 'rxjs';
 import { BasicWallet } from "@white-matrix/basic-wallet";
 import { ethereum } from './type';
 import { convertWei, normalizeArgs } from './utils';
-import './evmProvider/dist/evm-iframe-bundle';
 import { IEvmAccount } from './type/IInternal';
+import devkitVm from './evmProvider/src/evm';
 import ChainIdeProxyImp from '@white-matrix/chainide-proxy-implements';
 
 const Tx = require('ethereumjs-tx').Transaction;
@@ -53,7 +53,7 @@ export default class EvmWallet implements BasicWallet {
 
   constructor() {
     let provider;
-    const devkitVm = window.devkitVm;
+    devkitVm.init();
     provider = new devkitVm.Provider(devkitVm);
 
     this.web3 = new Web3(provider);
