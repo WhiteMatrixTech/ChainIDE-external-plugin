@@ -1,22 +1,26 @@
 import { cloneDeep } from 'lodash';
 import { Observable, Observer } from 'rxjs';
 import { BasicWallet } from "@white-matrix/basic-wallet";
-import ChainIdeProxyImp from '../../lib/chainIdeProxyImp/ChainIdeProxyImp';
 import { ethereum } from './type';
 import { convertWei, normalizeArgs } from './utils';
 import { IWeb3CallResult } from './type/IInternal';
+import ChainIdeProxyImp from '../../lib/chainIdeProxyImp/ChainIdeProxyImp';
 
 const MAX_NUM_HANDLE_CONFIRMATION = 5;
-
-const chainIdeProxyImp = new ChainIdeProxyImp({ pluginId: 'simplePlugin' });
-
-chainIdeProxyImp.subscribeEvent('root.pluginLoad', () => {
-  console.info('plugin loaded !!!!!!');
-});
 
 export default class MetamaskWallet implements BasicWallet {
   web3: any;
   metaMaskEthereum: any;
+
+  chainidNetworkNameMap: { [key: string]: string } = {
+    '0x1': 'Ethereum Main Network (MainNet)',
+    '0x3': 'Ropsten Test Network',
+    '0x4': 'Rinkeby Test Network',
+    '0x5': 'Goerli Test Network',
+    '0x2a': 'Kovan Test Network'
+  };
+
+  static pluginId: 'metamaskWalletPlugin';
 
   /**
  * [instance  当前实例]
@@ -32,8 +36,16 @@ export default class MetamaskWallet implements BasicWallet {
     if (false === this.instance instanceof this) {
       this.instance = new this();
     }
-
     return this.instance;
+  }
+
+  /**
+   * [destroyInstance 销毁实例]
+   * @method destroyInstance
+   * @return {[type]}    [description]
+   */
+  static destroyInstance() {
+    this.instance = null;
   }
 
   constructor() {
@@ -45,15 +57,15 @@ export default class MetamaskWallet implements BasicWallet {
    * [init 钱包初始化]
    * @method init
    * @params {onChainChange: listen并获取网络, onAccountChange: listen并获取账户 }
-   * @return {[Promise]}
+   * @return {[Promise]} 
    */
-  init(onChainChange: Function, onAccountChange: Function) {
+  init(onChainChangeEvent: string, onAccountChangeEvent: string) {
     return new Promise<any>((resolve, reject) => {
       if (!this.web3 || !this.metaMaskEthereum) {
         const error = new Error('MetaMask 未安装');
         reject(error);
       } else {
-        resolve(() => this.connectWeb3Service(onChainChange, onAccountChange));
+        resolve(() => this.connectWeb3Service(onChainChangeEvent, onAccountChangeEvent));
       }
     });
   }
@@ -68,7 +80,8 @@ export default class MetamaskWallet implements BasicWallet {
   fetchNetwork() {
     return Observable.create((observer: Observer<any>) => {
       this.metaMaskEthereum.request({ method: 'eth_requestAccounts' }).then(() => {
-        observer.next(this.metaMaskEthereum.chainId);
+        const network = this.chainidNetworkNameMap[this.metaMaskEthereum.chainId];
+        observer.next(network);
         observer.complete();
       });
     });
@@ -106,9 +119,10 @@ export default class MetamaskWallet implements BasicWallet {
   };
 
   connectWeb3Service = async (
-    onChainChange: Function,
-    onAccountChange: Function
+    onChainChangeEvent: string,
+    onAccountChangeEvent: string
   ) => {
+    const newChainIdeProxyImp = new ChainIdeProxyImp({ pluginId: MetamaskWallet.pluginId });
     try {
       // Will Start the MetaMask Extension
       await this.metaMaskEthereum.request({ method: 'eth_requestAccounts' });
@@ -116,15 +130,15 @@ export default class MetamaskWallet implements BasicWallet {
         // Handle the new chain.
         // Correctly handling chain changes can be complicated.
         // We recommend reloading the page unless you have a very good reason not to.
-        onChainChange();
+        newChainIdeProxyImp.publishEvent(onChainChangeEvent, '');
       });
       this.metaMaskEthereum.on('accountsChanged', (accounts: string[]) => {
         // Handle the new accounts, or lack thereof.
         // "accounts" will always be an array, but it can be empty.
-        onAccountChange(accounts);
+        newChainIdeProxyImp.publishEvent(onAccountChangeEvent, accounts);
       });
-      onChainChange();
-      onAccountChange();
+      newChainIdeProxyImp.publishEvent(onChainChangeEvent, '');
+      newChainIdeProxyImp.publishEvent(onAccountChangeEvent, '');
     } catch (error) {
       console.warn(error);
     }

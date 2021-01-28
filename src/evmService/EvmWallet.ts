@@ -7,9 +7,9 @@ import { ethereum } from './type';
 import { convertWei, normalizeArgs } from './utils';
 import './evmProvider/dist/evm-iframe-bundle';
 import { IEvmAccount } from './type/IInternal';
+import ChainIdeProxyImp from '@white-matrix/chainide-proxy-implements';
 
 const Tx = require('ethereumjs-tx').Transaction;
-const MAX_NUM_HANDLE_CONFIRMATION = 5;
 
 export default class EvmWallet implements BasicWallet {
   web3: any;
@@ -22,6 +22,8 @@ export default class EvmWallet implements BasicWallet {
 
   _gasPrice = '0x3B9ACA00';
   _gasLimit = '0x2DC6C0';
+
+  static pluginId: 'evmWalletPlugin';
 
   /**
  * [instance  当前实例]
@@ -40,6 +42,15 @@ export default class EvmWallet implements BasicWallet {
     return this.instance;
   }
 
+  /**
+   * [destroyInstance 销毁实例]
+   * @method destroyInstance
+   * @return {[type]}    [description]
+   */
+  static destroyInstance() {
+    this.instance = null;
+  }
+
   constructor() {
     let provider;
     const devkitVm = window.devkitVm;
@@ -54,15 +65,15 @@ export default class EvmWallet implements BasicWallet {
    * [init 钱包初始化]
    * @method init
    * @params {onChainChange: listen并获取网络, onAccountChange: listen并获取账户 }
-   * @return {[Promise]}
+   * @return {[Promise]} 
    */
-  init(onChainChange: Function, onAccountChange: Function) {
+  init(onChainChangeEvent: string, onAccountChangeEvent: string) {
     return new Promise<any>((resolve, reject) => {
       if (!this.web3 || !this.devkitVm) {
         const error = new Error('EVM 初始化失败');
         reject(error);
       } else {
-        resolve(() => this.connectWeb3Service(onChainChange, onAccountChange));
+        resolve(() => this.connectWeb3Service(onChainChangeEvent, onAccountChangeEvent));
       }
     });
   }
@@ -103,12 +114,13 @@ export default class EvmWallet implements BasicWallet {
   };
 
   connectWeb3Service = async (
-    onChainChange: Function,
-    onAccountChange: Function
+    onChainChangeEvent: string,
+    onAccountChangeEvent: string
   ) => {
     try {
-      onChainChange();
-      onAccountChange();
+      const newChainIdeProxyImp = new ChainIdeProxyImp({ pluginId: EvmWallet.pluginId });
+      newChainIdeProxyImp.publishEvent(onChainChangeEvent, '');
+      newChainIdeProxyImp.publishEvent(onAccountChangeEvent, '');
     } catch (error) {
       console.warn(error);
     }

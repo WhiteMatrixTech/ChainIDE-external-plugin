@@ -407,10 +407,10 @@
   resolved "https://registry.yarnpkg.com/@webpack-cli/serve/-/serve-1.1.0.tgz#13ad38f89b6e53d1133bac0006a128217a6ebf92"
   integrity sha512-7RfnMXCpJ/NThrhq4gYQYILB18xWyoQcBey81oIyVbmgbc6m5ZHHyFK+DyH7pLHJf0p14MxL4mTsoPAgBSTpIg==
 
-"@white-matrix/basic-wallet@^1.0.2":
-  version "1.0.2"
-  resolved "https://registry.yarnpkg.com/@white-matrix/basic-wallet/-/basic-wallet-1.0.2.tgz#2549e1f07271844e65f3d39f4bd4f812bbb28ba5"
-  integrity sha512-q7H/F98+0pCkDt1MQZWS2+I/1YZU0Z6Pqu3aedQADOo5K6l7LDUMWrU3xhMsVKCr4QJ6E9Y3CA2jcXamZ/CCow==
+"@white-matrix/basic-wallet@^1.0.3":
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/@white-matrix/basic-wallet/-/basic-wallet-1.0.3.tgz#45d165d9f0d6a857c4407a683f7fa3f3e558160d"
+  integrity sha512-qd0PeMF069PcpjPc42VzqGyPh+gVxY9F1s6rzPaQ61eAQBeDcL3sJp00bqq/+AaaCmetdc6gAcZFoCO5U6dikw==
 
 "@xtuc/ieee754@^1.2.0":
   version "1.2.0"

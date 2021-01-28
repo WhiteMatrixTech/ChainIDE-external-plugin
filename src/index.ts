@@ -25,7 +25,7 @@ export enum PluginPosition {
 
 export default function pluginInit() {
     return {
-        pluginId: 'simplePlugin',
+        pluginId: 'metamaskWalletPlugin',
         moduleName: 'simplePlugin',
         version: '0.0.1',
         type: PluginType.server,
